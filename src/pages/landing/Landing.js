@@ -1,23 +1,13 @@
-<<<<<<< HEAD
-import { useNavigate } from 'react-router-dom';
-=======
-import './Landing.css'
->>>>>>> 0d34f5b97acbb98747590df7340e35956eac4227
 
+import { useNavigate } from "react-router-dom";
+import './Landing.css';
 function Landing() {
     const navigate = useNavigate();
 function handleClick(){
     navigate('/home')
 }
     return (
-<<<<<<< HEAD
-        <>
-   
-<button className="btn" onClick={handleClick}>
-    Start
-</button>
-</>
-=======
+
         <div className="wrapper">
             <div className="bg">
                 <svg width="100%" height="932" viewBox="0 0 430 932" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,12 +42,11 @@ function handleClick(){
                     </defs>
                 </svg>
             </div>
-            <button className='get-started'>Get Started</button>
+            <button className='get-started' onClick={handleClick}>Get Started</button>
         </div>
 
 
 
->>>>>>> 0d34f5b97acbb98747590df7340e35956eac4227
     );
 
 }
