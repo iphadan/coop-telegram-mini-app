@@ -1,5 +1,55 @@
-.logo{
-    position: absolute;
-    top: 30;
-    
+html, body {
+    height: 100%; /* Ensure full height for centering */
+    margin: 0; /* Remove default margins */
+    overflow: hidden; /* Prevent any overflow from showing scrollbars */
 }
+
+.wrapper {
+    margin-top: 0px;
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    height: 100vh; /* Full viewport height */
+    position: relative; /* Needed for absolute positioning of logo */
+}
+
+.bg {
+    width: 100%; /* Make the background SVG take full width */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 100%; /* Ensure it doesn't exceed the height of the parent */
+    display: block; /* Ensures no extra space is added */
+    position: absolute; /* Position behind the logo */
+    top: 0; /* Align to top */
+    left: 0; /* Align to left */
+}
+
+.logo {
+    position: absolute; /* Position the logo absolutely */
+    top: 10%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -30%); /* Adjust position slightly down */
+    width: 131px; /* Set the width to the logo's size */
+    height: 53px; /* Set the height to the logo's size */
+    z-index: 1; /* Ensure logo is above background */
+}
+/* Existing CSS here... */
+
+.get-started {
+    position: absolute; /* Position the button absolutely */
+    bottom: 20px; /* Position 20px from the bottom */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust to center the button */
+    width: 265px; /* Set width */
+    height: 51px; /* Set height */
+    font-size: 16px; /* Font size */
+    color: white; /* White text color */
+    background-color: #00ADEF; /* Button background color */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); /* Drop shadow */
+    cursor: pointer; /* Pointer on hover */
+    outline: none; /* Remove outline */
+}
+
+
+
