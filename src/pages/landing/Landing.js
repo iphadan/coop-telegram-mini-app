@@ -1,16 +1,13 @@
-import React from 'react';
-import './Landing.css'
-import { useNavigate } from 'react-router-dom';
 
+import { useNavigate } from "react-router-dom";
+import './Landing.css';
 function Landing() {
     const navigate = useNavigate();
-
-        function goToHome(){      
-         navigate('/cob');
-        }
-
+function handleClick(){
+    navigate('/home')
+}
     return (
-    
+
         <div className="wrapper">
             <div className="bg">
                 <svg width="100%" height="932" viewBox="0 0 430 932" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +42,7 @@ function Landing() {
                     </defs>
                 </svg>
             </div>
-            <button className='get-started' onClick={goToHome}>Get Started</button>
+            <button className='get-started' onClick={handleClick}>Get Started</button>
         </div>
 
 
