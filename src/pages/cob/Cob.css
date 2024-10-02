@@ -52,15 +52,18 @@
         display: flex; /* Use flexbox for layout */
         justify-content: space-between; /* Space between elements */
         align-items: center; /* Center items vertically */
-        width: 70%; /* Width of the container */
-        margin-left: auto; /* Push the container to the right */
+        width: 120%; /* Width of the container */
+        margin-left: 50%;
     }
     
 
     
     .search-input {
-        width: 70%; /* Full width of the input */
-        height: 68px; /* Height of the input */
+        height: 48px; /* Height of the input */
+        width: 80%; /* Width of the container */
+        color: white;
+
+        align-items: center;
         border-radius: 31px; /* Rounded corners */
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.24); /* Drop shadow */
         padding-left: 40px; /* Space for the SVG */
@@ -68,7 +71,6 @@
         outline: none; /* Remove outline on focus */
         border: none; /* No border */
         background-color: white; /* Input background color */
-        color: black; /* Text color */
         background-color: #00ADEF; /* Button color */
     }
     
@@ -76,11 +78,35 @@
         position: absolute; /* Position the SVG absolutely */
         left: 10px; /* Space from the left */
         top: 50%; /* Center vertically */
+        color: white;
+
         transform: translateY(-50%); /* Adjust for vertical centering */
         width: 20px; /* Width of the SVG (adjust as needed) */
         height: 20px; /* Height of the SVG (adjust as needed) */
     }
     
-    
-    
+    .rectangularBox {
+        background-color: #00ADEF;
+        align-items: center;
+        color: white;
+        height: 55%;
+      
+        padding: 20px;
+        margin-top: 7%; /* Margin from all sides */
+        margin-left: 15%; /* Margin from all sides */
+
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        width: 70%; /* Adjust width as needed */
+        text-align: center; /* Center the text */
+    }
+    .regtangleBtn{
+        background-color: #2297d6fa;
+        border-style: none;
+        width: 80%; /* Adjust width as needed */
+height: 8%;
+margin-left: 9.4%; /* Margin from all sides */
+align-items: center;
+
+    }
 }
