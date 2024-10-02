@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.upper {
+  height: 50%;
+  background-color: #29ccfd;
+flex-direction: column;
+}
+
+.lower {
+  height: 50%;
+  background-color: rgb(168, 81, 81);
+  flex-direction: column;
+ 
+}
+.btn{
+  background-color: #29ccfd;
+}
