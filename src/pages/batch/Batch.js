@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 function Batch() {
     const navigate = useNavigate();
 
-    function goToHome(){
+    function goToHome() {
         navigate('/home')
     }
-    function goToCob(){
+    function goToCob() {
         navigate('/cob')
     }
     return (
@@ -43,7 +43,7 @@ function Batch() {
             </div> */}
             <div className="content">
                 <div className="search-container">
-               
+
 
                     <div style={{ position: 'relative', width: '70%' }}>
                         <input type="text" className="search-input" placeholder='Enter Date' />
@@ -56,11 +56,11 @@ function Batch() {
                 </div>
                 <div className='rectangularBox'>
 
-             
+
                 </div>
-   <button className='regtangleBtn' onClick={goToCob}>
-    Go to Batch
-</button>
+                <button className='regtangleBtn' onClick={goToCob}>
+                    Go to COB
+                </button>
 
                 <div className="button" onClick={goToHome}>
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">

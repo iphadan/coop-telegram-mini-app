@@ -1,18 +1,18 @@
-/* Make sure the styles only apply to mobile devices */
-@media (max-width: 768px) {
+
     .container {
         background-color: #00ADEF; /* Background color */
         height: 100vh; /* Full viewport height */
         display: flex;
         justify-content: flex-end; /* Align content to the bottom */
         position: relative;
+        
     }
 
     .content {
-        background-color: white; /* White rectangle */
+        background-color: rgb(255, 255, 255); /* White rectangle */
         width: 100%; /* Full width */
         height: 70%; /* Takes 70% of the height */
-        border-top-left-radius: 20px; /* Optional: rounded corners */
+        border-top-left-radius: 100%; /* Optional: rounded corners */
         border-top-right-radius: 20px; /* Optional: rounded corners */
         position: absolute;
         bottom: 0; /* Position at the bottom */
@@ -110,4 +110,3 @@ align-items: center;
 
     }
     
-}
