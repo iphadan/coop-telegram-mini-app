@@ -1,6 +1,6 @@
 
-import { useEffect,useState } from 'react';
 import './Cob.css';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchCOB } from '../../services/cobService';
 function Cob() {
@@ -11,24 +11,34 @@ function Cob() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const [givenDate, setgivenDate] = useState('')
+
+
+    const [progressValues, setProgressValues] = useState([50, 0, 0, 0, 0]); // Example progress values
   
 
 
 
-    const search = async () => {
+    const getData = async () => {
         setLoading(true)
         const requestBody = {
-                     username: process.env.REACT_APP_USERNAME,
-                     password: process.env.REACT_APP_PASSWORD,
-                     wsdl: process.env.REACT_APP_WSDL,
-                     date:givenDate
-                    }
+            username: process.env.REACT_APP_USERNAME,
+            password: process.env.REACT_APP_PASSWORD,
+            wsdl: process.env.REACT_APP_WSDL,
+        }
         try {
-              const result = await fetchCOB(requestBody);
-              setData(result)
-        }catch(err){
+            const result = await fetchCOB(requestBody);
+            setData(result)
+      let total=data["app0"] + data["app1"] + data["app2"] + data["app2"];
+      const updatedProgressValues = [...progressValues]; 
+      updatedProgressValues[0] = data["app2"] / total * 100
+      setProgressValues(updatedProgressValues)
+      console.log(progressValues)
+      
+      console.log(total);
+
+         } catch (err) {
             setError(err)
-        }finally{
+        } finally {
             setLoading(false)
         }
 
@@ -36,22 +46,14 @@ function Cob() {
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
-  
 
-    function goToHome(){
+
+    function goToHome() {
         navigate('/home')
     }
-    function goToBatch(){
-        navigate('/batch')
-    }
+
     return (
         <div className="container">
-
-
-
-
-
-
             <div className="logo">
                 <svg width="131" height="53" viewBox="0 0 131 53" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_53_18)">
@@ -78,64 +80,70 @@ function Cob() {
                     </defs>
                 </svg>
             </div>
-
             <div className="content">
-                <div className="search-container">
-                    <div style={{ position: 'relative', width: '70%' }}>
-                        <input type="text"
-                         className="search-input"
-                          placeholder='Enter Date'
-                          value={givenDate}
-                          onChange={(e) => setgivenDate(e.target.value)} />
+        {/* Progress Bar Section */}
+        <div className="progress-container">
+          {/* Blue Progress Bar */}
+          <div className="progress-bar blue">
+            <div className="progress-background"></div>
+            <div
+              className="progress-foreground"
+              style={{ width: `${progressValues[0]}%` }}
+            ></div>
+            <span className="progress-text">{`${progressValues[0]}%`}</span>
+          </div>
 
-                        <svg onClick={search} className="search-svg" width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M24.5 27.125L16.625 18.9875C16 19.5042 15.2812 19.9132 14.4688 20.2146C13.6562 20.516 12.7917 20.6667 11.875 20.6667C9.60417 20.6667 7.68229 19.854 6.10938 18.2286C4.53646 16.6033 3.75 14.6174 3.75 12.2708C3.75 9.92431 4.53646 7.93837 6.10938 6.31302C7.68229 4.68767 9.60417 3.875 11.875 3.875C14.1458 3.875 16.0677 4.68767 17.6406 6.31302C19.2135 7.93837 20 9.92431 20 12.2708C20 13.2181 19.8542 14.1115 19.5625 14.951C19.2708 15.7906 18.875 16.5333 18.375 17.1792L26.25 25.3167L24.5 27.125ZM11.875 18.0833C13.4375 18.0833 14.7656 17.5182 15.8594 16.388C16.9531 15.2578 17.5 13.8854 17.5 12.2708C17.5 10.6562 16.9531 9.28385 15.8594 8.15365C14.7656 7.02344 13.4375 6.45833 11.875 6.45833C10.3125 6.45833 8.98438 7.02344 7.89062 8.15365C6.79688 9.28385 6.25 10.6562 6.25 12.2708C6.25 13.8854 6.79688 15.2578 7.89062 16.388C8.98438 17.5182 10.3125 18.0833 11.875 18.0833Z" fill="#FEF7FF" />
-                        </svg>
+          {/* Orange Progress Bar */}
+          <div className="progress-bar orange">
+            <div className="progress-background"></div>
+            <div
+              className="progress-foreground"
+              style={{ width: `${progressValues[1]}%` }}
+            ></div>
+            <span className="progress-text">{`${progressValues[1]}%`}</span>
+          </div>
 
-                    </div>
+          {/* Green Progress Bar */}
+          <div className="progress-bar green">
+            <div className="progress-background"></div>
+            <div
+              className="progress-foreground"
+              style={{ width: `${progressValues[2]}%` }}
+            ></div>
+            <span className="progress-text">{`${progressValues[2]}%`}</span>
+          </div>
 
-                </div>
-                <div className='rectangularBox'>
-                {data && (
-                <div style={{ marginTop: '20px' }}>
-              
-                    <div>
-                        <strong>Service Control:</strong> {data.serviceControl}
-                    </div>
-                    <div>
-                        <strong>Timeout:</strong> {data.timeout}
-                    </div>
-                    <div>
-                        <strong>Date:</strong> {data.date}
-                    </div>
-                    <div>
-                        <strong>Started:</strong> {data.started}
-                    </div>
-                    <div>
-                        <strong>Elapsed:</strong> {data.elapsed}
-                    </div>
-                    <div>
-                        <strong>Stopped:</strong> {data.stopped}
-                    </div>
-                    <div>
-                        <strong>Transaction:</strong> {data.transaction}
-                    </div>
-                </div>
-            )}
+          {/* Red Progress Bar */}
+          <div className="progress-bar red">
+            <div className="progress-background"></div>
+            <div
+              className="progress-foreground"
+              style={{ width: `${progressValues[3]}%` }}
+            ></div>
+            <span className="progress-text">{`${progressValues[3]}%`}</span>
+          </div>
+
+          {/* Black Progress Bar */}
+          <div className="progress-bar black">
+            <div className="progress-background"></div>
+            <div
+              className="progress-foreground"
+              style={{ width: `${progressValues[4]}%` }}
+            ></div>
+            <span className="progress-text">{`${progressValues[4]}%`}</span>
+          </div>
+        </div>
+
+        {/* Home Button */}
+        <div className="button" onClick={getData}>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.75 16.5V9H11.25V16.5M2.25 6.75L9 1.5L15.75 6.75V15C15.75 15.3978 15.592 15.7794 15.3107 16.0607C15.0294 16.342 14.6478 16.5 14.25 16.5H3.75C3.35218 16.5 2.97064 16.342 2.68934 16.0607C2.40804 15.7794 2.25 15.3978 2.25 15V6.75Z" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span>Home</span>
+        </div>
+      </div>
 
 
-                </div>
-
-<button className='regtangleBtn' onClick={goToBatch}>
-    Go to BATCH           
-</button>
-                <div className="button" onClick={goToHome}>
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.75 16.5V9H11.25V16.5M2.25 6.75L9 1.5L15.75 6.75V15C15.75 15.3978 15.592 15.7794 15.3107 16.0607C15.0294 16.342 14.6478 16.5 14.25 16.5H3.75C3.35218 16.5 2.97064 16.342 2.68934 16.0607C2.40804 15.7794 2.25 15.3978 2.25 15V6.75Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <span>Home</span>
-                </div>
-            </div>
         </div>
     );
 }
