@@ -13,7 +13,7 @@ function Cob() {
     const [givenDate, setgivenDate] = useState('')
 
 
-    const [progressValues, setProgressValues] = useState([50, 0, 0, 0, 0]); // Example progress values
+    const [progressValues, setProgressValues] = useState([]); // Example progress values
   
 
 
@@ -27,14 +27,11 @@ function Cob() {
         }
         try {
             const result = await fetchCOB(requestBody);
-            setData(result)
-      let total=data["app0"] + data["app1"] + data["app2"] + data["app2"];
-      const updatedProgressValues = [...progressValues]; 
-      updatedProgressValues[0] = data["app2"] / total * 100
-      setProgressValues(updatedProgressValues)
+            setData([result['application'],result['systemWide'],result['reporting'],result['startOfDay'],result['online']])
+      setProgressValues(data)
       console.log(progressValues)
       
-      console.log(total);
+
 
          } catch (err) {
             setError(err)
@@ -83,6 +80,7 @@ function Cob() {
             <div className="content">
         {/* Progress Bar Section */}
         <div className="progress-container">
+
           {/* Blue Progress Bar */}
           <div className="progress-bar blue">
             <div className="progress-background"></div>
@@ -149,3 +147,350 @@ function Cob() {
 }
 
 export default Cob;
+
+
+// import './Cob.css';
+// import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { fetchCOB } from '../../services/cobService';
+
+// function Cob() {
+//     console.log(process.env.REACT_APP_USERNAME)
+
+//     const [data, setData] = useState([]);
+//     const [loading, setLoading] = useState(false);
+//     const [error, setError] = useState(null);
+//     const navigate = useNavigate();
+//     const [givenDate, setGivenDate] = useState('');
+
+//     const [progressValue, setProgressValue] = useState(70); // Single progress value
+
+//     const getData = async () => {
+//         setLoading(true);
+//         const requestBody = {
+//             username: process.env.REACT_APP_USERNAME,
+//             password: process.env.REACT_APP_PASSWORD,
+//             wsdl: process.env.REACT_APP_WSDL,
+//         };
+//         try {
+//             const result = await fetchCOB(requestBody);
+//             setData(result);
+
+//             // Assuming 'app0', 'app1', 'app2', 'app3' represent some progress values
+//             const total = Number(result["app0"]) + Number(result["app1"]) + Number(result["app2"]) + Number(result["app3"]);
+//             const progress = (Number(result["app2"]) / total) * 100; // Calculate progress based on 'app2' value
+//             setProgressValue(progress);
+
+        
+
+            
+//         } catch (err) {
+//             setError(err);
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     if (loading) return <div>Loading...</div>;
+//     if (error) return <div>Error: {error.message}</div>;
+
+//     function goToHome() {
+//         getData();
+//         navigate('/home');
+//     }
+
+//     // Function to calculate the width of each section
+//     const getSectionWidth = (startPercentage, endPercentage) => {
+//       console.log(progressValue)
+//         if (progressValue >= endPercentage) {
+//             return 20; // Fully filled section
+//         } else if (progressValue > startPercentage) {
+//             return (progressValue - startPercentage) / (endPercentage - startPercentage) * 20;
+//         }
+//         return 0; // Empty section
+//     };
+
+//     return (
+//         <div className="container">
+//             <div className="logo">
+//                 {/* Your logo SVG here */}
+//             </div>
+//             <div className="content">
+//                 {/* Progress Bar Section */}
+//                 <div className="progress-container">
+//                     {/* Single Divided Progress Bar */}
+//                     <div className="progress-bar">
+//                         <div className="progress-section" style={{ width: `${ getSectionWidth(0, 20)}%`, backgroundColor: '#48bd4e' }}></div>
+//                         <div className="progress-section" style={{ width: `${getSectionWidth(20, 40)}%`, backgroundColor: '#f1eb27' }}></div>
+//                         <div className="progress-section" style={{ width: `${getSectionWidth(40, 60)}%`, backgroundColor: '#33f0ff' }}></div>
+//                         <div className="progress-section" style={{ width: `${getSectionWidth(60, 80)}%`, backgroundColor: '#f1bd27' }}></div>
+//                         <div className="progress-section" style={{ width: `${getSectionWidth(80, 100)}%`, backgroundColor: '#13120f' }}></div>
+
+//                     </div>
+//                     <p className="progress-text">{Math.round(progressValue)}%</p> {/* Show the percentage */}
+//                 </div>
+
+//                 {/* Other UI Components */}
+//                 <button onClick={goToHome}>Go to Home</button>
+//                 {/* Add more UI as required */}
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default Cob;
+
+
+// import './Cob.css';
+// import { useState, useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { fetchCOB } from '../../services/cobService';
+
+// function Cob() {
+//     const [data, setData] = useState({}); // Holds the data for the current stage
+//     const [loading, setLoading] = useState(false); // Loading state
+//     const [error, setError] = useState(null); // Error handling
+//     const [currentStage, setCurrentStage] = useState(0); // Tracks the current stage
+//     const [progressValues, setProgressValues] = useState([0, 0, 0, 0, 0]); // Progress values for each stage
+//     const navigate = useNavigate();
+
+//     // Stages to track (Application, System Wide, etc.)
+//     const stages = ['Application', 'System Wide', 'Daily', 'Start of Day', 'Online'];
+
+//     // Function to calculate the progress for a single stage
+//     const calculateStageProgress = (stageData) => {
+//         const totalBatches = stageData.app0 + stageData.app1 + stageData.app2 + stageData.app3;
+//         const completedBatches = stageData.app2; // Completed batches
+//         return (completedBatches / totalBatches) * 100; // Percentage completion for that stage
+//     };
+
+//     // Fetch the data and progress for the next stage
+//     const getData = async () => {
+//         setLoading(true);
+//         const requestBody = {
+//             username: process.env.REACT_APP_USERNAME,
+//             password: process.env.REACT_APP_PASSWORD,
+//             wsdl: process.env.REACT_APP_WSDL,
+//         };
+
+//         try {
+//             const result = await fetchCOB(requestBody);
+//             setData(result); // Store the data for the current stage
+
+//             // Calculate progress for the current stage
+//             const stageProgress = calculateStageProgress(result);
+
+//             // Update the progress for the current stage
+//             const updatedProgressValues = [...progressValues];
+//             updatedProgressValues[currentStage] = Math.min(stageProgress, 100); // Ensure progress doesn't exceed 100%
+
+//             setProgressValues(updatedProgressValues); // Set the updated progress values
+
+//             // Check if the current stage is complete and move to the next stage
+//             const totalBatchesForCurrentStage = result.app0 + result.app1 + result.app2 + result.app3;
+//             if (result.app2 >= totalBatchesForCurrentStage && currentStage < 4) {
+//                 setCurrentStage(currentStage + 1); // Move to the next stage
+//             }
+//         } catch (err) {
+//             setError(err);
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     // Use effect to automatically fetch data for each stage every 10 seconds
+//     useEffect(() => {
+//         if (currentStage < 5) {
+//             const interval = setInterval(() => {
+//                 getData(); // Fetch data every 10 seconds
+//             }, 10000);
+
+//             // Cleanup on component unmount or stage change
+//             return () => clearInterval(interval);
+//         }
+//     }, [currentStage]);
+
+//     if (loading) return <div>Loading...</div>;
+//     if (error) return <div>Error: {error.message}</div>;
+
+//     // Function to calculate the width for each progress section (representing each stage)
+//     const getSectionWidth = (progress) => {
+//         return Math.min(progress, 100); // Ensure progress does not exceed 100%
+//     };
+
+//     return (
+//         <div className="container">
+//             <div className="logo">
+//                 {/* Your logo SVG here */}
+//             </div>
+//             <div className="content">
+//                 {/* Progress Bar Section */}
+//                 <div className="progress-container">
+//                     <div className="progress-bar">
+//                         {/* Dynamic Progress Sections */}
+//                         {stages.map((stage, index) => (
+//                             <div
+//                                 key={index}
+//                                 className="progress-section"
+//                                 style={{
+//                                     width: `${getSectionWidth(progressValues[index])}%`,
+//                                     backgroundColor: index === 0 ? '#48bd4e' : 
+//                                                       index === 1 ? '#f1eb27' : 
+//                                                       index === 2 ? '#33f0ff' : 
+//                                                       index === 3 ? '#f1bd27' : '#13120f',
+//                                 }}
+//                             />
+//                         ))}
+//                     </div>
+//                     <p className="progress-text">{Math.round(progressValues[currentStage])}%</p> {/* Show the current stage percentage */}
+//                 </div>
+
+//                 <p>Current Stage: {stages[currentStage]}</p> {/* Show current stage name */}
+                
+//                 {/* Manually Trigger Data Fetch */}
+//                 <button onClick={getData}>Fetch Data Manually</button>
+//                 {/* Go to Home Button */}
+//                 <button onClick={() => navigate('/home')}>Go to Home</button>
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default Cob;
+
+
+
+
+// import './Cob.css';
+// import { useState, useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { fetchCOB } from '../../services/cobService';
+
+// function Cob() {
+//     console.log(process.env.REACT_APP_USERNAME);
+
+//     const [data, setData] = useState([]); // Holds the data for the current stage
+//     const [loading, setLoading] = useState(false); // Loading state
+//     const [error, setError] = useState(null); // Error handling
+//     const navigate = useNavigate();
+//     const [currentStage, setCurrentStage] = useState(0); // Tracks the current stage
+//     const [progressValues, setProgressValues] = useState([10, 0, 0, 0, 0]); // Progress values for each stage
+
+//     // Stages to track (Application, System Wide, etc.)
+//     const stages = ['Application', 'System Wide', 'Daily', 'Start of Day', 'Online'];
+
+//     // Function to calculate the progress for a single stage
+//     const calculateStageProgress = (stageData) => {
+//         const totalBatches = stageData.app0 + stageData.app1 + stageData.app2 + stageData.app3;
+//         const completedBatches = stageData.app2; // Completed batches
+//         return (completedBatches / totalBatches) * 100; // Percentage completion for that stage
+//     };
+
+//     // Fetch the data and progress for the next stage
+//     const getData = async () => {
+//         setLoading(true);
+//         const requestBody = {
+//             username: process.env.REACT_APP_USERNAME,
+//             password: process.env.REACT_APP_PASSWORD,
+//             wsdl: process.env.REACT_APP_WSDL,
+//         };
+
+//         try {
+//             const result = await fetchCOB(requestBody);
+//             setData(result); // Store the data for the current stage
+
+//             // Calculate progress for the current stage
+//             const stageProgress = calculateStageProgress(result);
+
+//             // Update the progress for the current stage
+//             const updatedProgressValues = [...progressValues];
+//             updatedProgressValues[currentStage] = Math.min(stageProgress, 100); // Ensure progress doesn't exceed 100%
+
+//             setProgressValues(updatedProgressValues); // Set the updated progress values
+
+//             // Check if the current stage is complete and move to the next stage
+//             const totalBatchesForCurrentStage = result.app0 + result.app1 + result.app2 + result.app3;
+//             if (result.app2 >= totalBatchesForCurrentStage && currentStage < 4) {
+//                 setCurrentStage(currentStage + 1); // Move to the next stage
+//             }
+//         } catch (err) {
+//             setError(err);
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     // Use effect to automatically fetch data for each stage every 10 seconds
+//     useEffect(() => {
+//         if (currentStage < 5) {
+//             const interval = setInterval(() => {
+//                 getData(); // Fetch data every 10 seconds
+//             }, 10000);
+
+//             // Cleanup on component unmount or stage change
+//             return () => clearInterval(interval);
+//         }
+//     }, [currentStage]);
+
+//     if (loading) return <div>Loading...</div>;
+//     if (error) return <div>Error: {error.message}</div>;
+
+//     // Function to calculate the width of each section (based on progress)
+//     const getSectionFillWidth = (progress) => {
+//         return (progress / 100) * 20; // Progress of a stage fills only 20% of the bar (but it's percentage based on 0-100% progress)
+//     };
+
+//     // Function to determine the color for each stage based on the stage's index
+//     const getColorForStage = (index) => {
+//         switch (index) {
+//             case 0: return '#48bd4e'; // Application stage - Green
+//             case 1: return '#f1eb27'; // System Wide stage - Yellow
+//             case 2: return '#33f0ff'; // Daily stage - Cyan
+//             case 3: return '#f1bd27'; // Start of Day stage - Orange
+//             case 4: return '#13120f'; // Online stage - Dark
+//             default: return '#ccc';
+//         }
+//     };
+
+//     return (
+//         <div className="container">
+//             <div className="logo">
+//                 {/* Your logo SVG here */}
+//             </div>
+//             <div className="content">
+//                 {/* Progress Bar Section */}
+//                 <div className="progress-container">
+//                     <div className="progress-bar">
+//                         {/* Dynamic Progress Sections */}
+//                         {stages.map((stage, index) => (
+//                             <div
+//                                 key={index}
+//                                 className="progress-section"
+//                                 style={{
+//                                     width: '20%', // Each stage gets 20% of the total bar
+//                                     backgroundColor: progressValues[index] === 0 ? '#e0e0e0' : // Unfilled (gray) if progress is 0%
+//                                                       progressValues[index] === 100 ? getColorForStage(index) : // Fully filled with respective color
+//                                                       getColorForStage(index), // Partial fill color for active progress
+//                                     transition: 'width 0.3s ease-in-out' // Smooth transition for filling progress
+//                                 }}
+//                             >
+//                                 {/* Show Progress Text in filled stages */}
+//                                 {progressValues[index] === 100 ? 'Completed' : `${Math.round(progressValues[index])}%`}
+//                             </div>
+//                         ))}
+//                     </div>
+//                     <p className="progress-text">{Math.round(progressValues[currentStage])}%</p> {/* Show the current stage percentage */}
+//                 </div>
+
+//                 <p>Current Stage: {stages[currentStage]}</p> {/* Show current stage name */}
+                
+//                 {/* Manually Trigger Data Fetch */}
+//                 <button onClick={getData}>Fetch Data Manually</button>
+//                 {/* Go to Home Button */}
+//                 <button onClick={() => navigate('/home')}>Go to Home</button>
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default Cob;

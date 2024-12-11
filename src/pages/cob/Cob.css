@@ -1,4 +1,4 @@
-/* Make sure the styles only apply to mobile devices */
+/* Ensure styles only apply to mobile devices */
 @media (max-width: 768px) {
     .progresses {
         background-color: red;
@@ -10,8 +10,8 @@
         height: 100vh;
         /* Full viewport height */
         display: flex;
-        justify-content: flex-end;
-        /* Align content to the bottom */
+        justify-content: center; /* Center the progress-container horizontally */
+        align-items: center; /* Center the progress-container vertically */
         position: relative;
     }
 
@@ -33,7 +33,7 @@
         flex-direction: column;
         align-items: center;
         /* Center elements horizontally */
-        justify-content: flex-end;
+        justify-content: center;
         /* Align to the bottom */
         padding: 20px;
         /* Space around content */
@@ -69,10 +69,6 @@
         /* Smooth transition */
     }
 
-
-
-
-
     .button svg {
         margin-right: 8px;
         /* Space between icon and text */
@@ -90,15 +86,12 @@
         margin-left: 50%;
     }
 
-
-
     .search-input {
         height: 48px;
         /* Height of the input */
         width: 80%;
         /* Width of the container */
         color: white;
-
         align-items: center;
         border-radius: 31px;
         /* Rounded corners */
@@ -126,7 +119,6 @@
         top: 50%;
         /* Center vertically */
         color: white;
-
         transform: translateY(-50%);
         /* Adjust for vertical centering */
         width: 20px;
@@ -134,26 +126,6 @@
         height: 20px;
         /* Height of the SVG (adjust as needed) */
     }
-
-    /* .rectangularBox {
-        background-color: #00ADEF;
-        align-items: center;
-        color: white;
-        height: 55%;
-
-        padding: 20px;
-        margin-top: 7%;
-    
-        margin-left: 15%;
-   
-
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-        width: 70%;
-  
-        text-align: center;
-    
-    } */
 
     .regtangleBtn {
         background-color: #2297d6fa;
@@ -164,99 +136,98 @@
         margin-left: 9.4%;
         /* Margin from all sides */
         align-items: center;
-
     }
 
     /* Progress Bar Container */
-.progress-container {
-    margin-top: 40px;
-    width: 100%;
-    padding: 20px;
-}
+    .progress-container {
+        width: 80%; /* Adjust container width if needed */
+        display: flex;
+        margin: 50%;
+        justify-content: space-between; /* Align bars horizontally without gaps */
+        align-items: center; /* Center bars vertically within the container */
+    }
 
-/* Individual Progress Bar */
-.progress-bar {
-    height: 25px;
-    margin: 10px 0;
-    border-radius: 8px;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
+    /* Individual Progress Bar */
+    .progress-bar {
+        height: 45px;
+        position: relative;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        flex: 1 1 auto; /* Ensure bars take equal width without spaces */
+        margin: 2px; /* Remove margin between bars */
+    }
 
-/* Background layer (light version) */
-.progress-bar .progress-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    border-radius: 8px;
-}
+    /* Background layer (light version) */
+    .progress-bar .progress-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        border-radius: 4px;
+    }
 
-/* Progress layer (dark version) */
-.progress-bar .progress-foreground {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%; /* Full height */
-    border-radius: 8px;
-}
+    /* Progress layer (dark version) */
+    .progress-bar .progress-foreground {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%; /* Full height */
+        border-radius: 4px;
+    }
 
-/* Progress Bar with Blue (active and empty states) */
-.progress-bar.blue .progress-background {
-    background-color: #A8D9F1; /* Light blue for empty state */
-}
+    /* Progress Bar with Blue (active and empty states) */
+    .progress-bar.blue .progress-background {
+        background-color: #A8D9F1; /* Light blue for empty state */
+    }
 
-.progress-bar.blue .progress-foreground {
-    background-color: #00ADEF; /* Darker blue for progress */
-}
+    .progress-bar.blue .progress-foreground {
+        background-color: #00ADEF; /* Darker blue for progress */
+    }
 
-/* Progress Bar with Orange (active and empty states) */
-.progress-bar.orange .progress-background {
-    background-color: #FFDAB3; /* Light orange for empty state */
-}
+    /* Progress Bar with Orange (active and empty states) */
+    .progress-bar.orange .progress-background {
+        background-color: #FFDAB3; /* Light orange for empty state */
+    }
 
-.progress-bar.orange .progress-foreground {
-    background-color: #FFA500; /* Darker orange for progress */
-}
+    .progress-bar.orange .progress-foreground {
+        background-color: #FFA500; /* Darker orange for progress */
+    }
 
-/* Progress Bar with Green (active and empty states) */
-.progress-bar.green .progress-background {
-    background-color: #A8D8A3; /* Light green for empty state */
-}
+    /* Progress Bar with Green (active and empty states) */
+    .progress-bar.green .progress-background {
+        background-color: #A8D8A3; /* Light green for empty state */
+    }
 
-.progress-bar.green .progress-foreground {
-    background-color: #4CAF50; /* Darker green for progress */
-}
+    .progress-bar.green .progress-foreground {
+        background-color: #4CAF50; /* Darker green for progress */
+    }
 
-/* Progress Bar with Red (active and empty states) */
-.progress-bar.red .progress-background {
-    background-color: #F2B8B8; /* Light red for empty state */
-}
+    /* Progress Bar with Red (active and empty states) */
+    .progress-bar.red .progress-background {
+        background-color: #F2B8B8; /* Light red for empty state */
+    }
 
-.progress-bar.red .progress-foreground {
-    background-color: #FF6347; /* Darker red for progress */
-}
+    .progress-bar.red .progress-foreground {
+        background-color: #FF6347; /* Darker red for progress */
+    }
 
-/* Progress Bar with Black (active and empty states) */
-.progress-bar.black .progress-background {
-    background-color: #D1D1D1; /* Light gray for empty state */
-}
+    /* Progress Bar with Black (active and empty states) */
+    .progress-bar.black .progress-background {
+        background-color: #D1D1D1; /* Light gray for empty state */
+    }
 
-.progress-bar.black .progress-foreground {
-    background-color: #000000; /* Black for progress */
-}
+    .progress-bar.black .progress-foreground {
+        background-color: #000000; /* Black for progress */
+    }
 
-/* Progress Text inside the bar */
-.progress-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 14px;
-    color: white;
-    font-weight: bold;
-}
-
-      
+    /* Progress Text inside the bar */
+    .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        color: white;
+        font-weight: bold;
+    }
 }
