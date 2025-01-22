@@ -1,8 +1,10 @@
 
 import './Cob.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchCOB } from '../../services/cobService';
+
+
+
 function Cob() {
     console.log(process.env.REACT_APP_USERNAME)
 
@@ -16,30 +18,42 @@ function Cob() {
     const [progressValues, setProgressValues] = useState([]); // Example progress values
   
 
-
-
     const getData = async () => {
-        setLoading(true)
-        const requestBody = {
-            username: process.env.REACT_APP_USERNAME,
-            password: process.env.REACT_APP_PASSWORD,
-            wsdl: process.env.REACT_APP_WSDL,
-        }
-        try {
-            const result = await fetchCOB(requestBody);
-            setData([result['application'],result['systemWide'],result['reporting'],result['startOfDay'],result['online']])
-      setProgressValues(data)
-      console.log(progressValues)
+      setLoading(true);
+      const requestBody = {
+          username: process.env.REACT_APP_USERNAME,
+          password: process.env.REACT_APP_PASSWORD,
+          wsdl: process.env.REACT_APP_WSDL,
+      };
       
+      try {
+          // Hardcoded result instead of fetch
+          const result = {
+            application: Math.floor(Math.random() * 101),  // Random number between 0 and 100
+            systemWide: Math.floor(Math.random() * 101),
+            reporting: Math.floor(Math.random() * 101),
+            startOfDay: Math.floor(Math.random() * 101),
+            online: Math.floor(Math.random() * 101),
+        };
+
+          // Set the data state with hardcoded values
+          setData([result['application'], result['systemWide'], result['reporting'], result['startOfDay'], result['online']]);
+          
+          // Set progress values
+          setProgressValues([result['application'], result['systemWide'], result['reporting'], result['startOfDay'], result['online']]);
+      } catch (err) {
+          setError(err);
+      } finally {
+          setLoading(false);
+      }
+  };
+
+  // Run getData on component mount (equivalent to running on page load)
+  useEffect(() => {
+      getData();
+  }, []);  // Empty dependency array makes it run once when the component mounts
 
 
-         } catch (err) {
-            setError(err)
-        } finally {
-            setLoading(false)
-        }
-
-    }
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
@@ -48,6 +62,7 @@ function Cob() {
     function goToHome() {
         navigate('/home')
     }
+
 
     return (
         <div className="container">
